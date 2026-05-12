@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Jitendra Kumar Sharma — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #0a0e1a;
+    --surface: #111827;
+    --surface2: #1a2235;
+    --border: rgba(99,179,237,0.15);
+    --border-hi: rgba(99,179,237,0.35);
+    --accent: #63b3ed;
+    --accent2: #f687b3;
+    --accent3: #68d391;
+    --text: #e2e8f0;
+    --muted: #718096;
+    --mono: 'Space Mono', monospace;
+    --sans: 'Sora', sans-serif;
+    --japan: #e53e3e;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 15px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE OVERLAY ─────────────────────────────────── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 0; opacity: 0.4;
+  }
+
+  /* ── NAV ──────────────────────────────────────────── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 clamp(1.5rem, 5vw, 4rem);
+    height: 60px;
+    background: rgba(10,14,26,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 0.5px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 13px; color: var(--accent); letter-spacing: 0.08em;
+  }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 12px; color: var(--muted); text-decoration: none;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    transition: color .2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ── SECTIONS WRAPPER ─────────────────────────────── */
+  main { position: relative; z-index: 1; }
+  section { padding: clamp(4rem, 8vw, 6rem) clamp(1.5rem, 5vw, 4rem); }
+  .container { max-width: 900px; margin: 0 auto; }
+
+  /* ── HERO ─────────────────────────────────────────── */
+  #hero {
+    min-height: 100vh;
+    display: flex; align-items: center;
+    padding-top: 90px;
+    background: radial-gradient(ellipse 70% 60% at 60% 40%, rgba(99,179,237,0.07) 0%, transparent 70%);
+  }
+  .hero-inner { max-width: 900px; margin: 0 auto; width: 100%; }
+
+  .hero-tag {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-family: var(--mono); font-size: 11px;
+    color: var(--accent3); letter-spacing: 0.12em;
+    background: rgba(104,211,145,0.08);
+    border: 0.5px solid rgba(104,211,145,0.25);
+    padding: 5px 14px; border-radius: 100px;
+    margin-bottom: 2rem;
+    animation: fadeUp 0.6s ease both;
+  }
+  .hero-tag::before { content: '●'; font-size: 8px; animation: pulse 2s infinite; }
+
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+  h1.hero-name {
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 700; line-height: 1.1; letter-spacing: -0.03em;
+    animation: fadeUp 0.7s 0.1s ease both;
+  }
+  .hero-name .first { color: var(--text); display: block; }
+  .hero-name .last {
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(99,179,237,0.6);
+    display: block;
+  }
+
+  .hero-sub {
+    margin-top: 1.2rem;
+    font-size: clamp(1rem, 2.5vw, 1.2rem);
+    color: var(--muted); font-weight: 300;
+    animation: fadeUp 0.7s 0.2s ease both;
+    max-width: 540px;
+  }
+  .hero-sub strong { color: var(--accent); font-weight: 600; }
+
+  .hero-meta {
+    display: flex; flex-wrap: wrap; gap: 1.5rem;
+    margin-top: 2.5rem;
+    animation: fadeUp 0.7s 0.3s ease both;
+  }
+  .meta-item {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; color: var(--muted); font-family: var(--mono);
+  }
+  .meta-item .dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent2); }
+
+  .hero-cta {
+    display: flex; flex-wrap: wrap; gap: 1rem;
+    margin-top: 2.5rem;
+    animation: fadeUp 0.7s 0.4s ease both;
+  }
+  .btn {
+    padding: 10px 24px; border-radius: 6px;
+    font-size: 13px; font-family: var(--mono);
+    letter-spacing: 0.05em; cursor: pointer;
+    text-decoration: none; transition: all .2s;
+    display: inline-flex; align-items: center; gap: 8px;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #0a0e1a; border: none; font-weight: 700;
+  }
+  .btn-primary:hover { background: #90cdf4; transform: translateY(-1px); }
+  .btn-outline {
+    background: transparent; color: var(--text);
+    border: 0.5px solid var(--border-hi);
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+
+  .hero-scroll {
+    margin-top: 4rem;
+    font-family: var(--mono); font-size: 11px; color: var(--muted);
+    letter-spacing: 0.1em; animation: fadeUp 0.7s 0.5s ease both;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .scroll-line { flex: 1; max-width: 60px; height: 0.5px; background: var(--muted); opacity: 0.3; }
+
+  /* ── SECTION HEADER ───────────────────────────────── */
+  .sec-header { margin-bottom: 3rem; }
+  .sec-num {
+    font-family: var(--mono); font-size: 11px;
+    color: var(--accent); letter-spacing: 0.2em;
+    display: block; margin-bottom: 0.5rem;
+  }
+  .sec-title {
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    font-weight: 700; letter-spacing: -0.02em; line-height: 1.2;
+  }
+  .sec-line {
+    width: 40px; height: 2px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    margin-top: 1rem;
+  }
+
+  /* ── ABOUT ────────────────────────────────────────── */
+  .about-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2.5rem;
+    align-items: start;
+  }
+  .about-text { font-size: 15px; color: var(--muted); line-height: 1.8; }
+  .about-text p + p { margin-top: 1rem; }
+  .about-text strong { color: var(--text); }
+
+  .about-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;
+  }
+  .stat-card {
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: 10px; padding: 1.25rem 1.5rem;
+    transition: border-color .2s;
+  }
+  .stat-card:hover { border-color: var(--border-hi); }
+  .stat-num {
+    font-size: 2.2rem; font-weight: 700; font-family: var(--mono);
+    color: var(--accent); line-height: 1;
+  }
+  .stat-label {
+    font-size: 12px; color: var(--muted); margin-top: 6px; letter-spacing: 0.05em;
+  }
+
+  /* ── EXPERIENCE TIMELINE ──────────────────────────── */
+  .timeline { position: relative; padding-left: 2rem; }
+  .timeline::before {
+    content: ''; position: absolute; left: 0; top: 6px; bottom: 0;
+    width: 0.5px; background: var(--border);
+  }
+  .tl-item { position: relative; margin-bottom: 2.5rem; }
+  .tl-dot {
+    position: absolute; left: -2rem; top: 6px;
+    width: 10px; height: 10px; border-radius: 50%;
+    background: var(--accent); border: 2px solid var(--bg);
+    transform: translateX(-50%) translateX(0.5px);
+    margin-left: -0.5px;
+  }
+  .tl-dot.current { background: var(--accent3); box-shadow: 0 0 8px rgba(104,211,145,0.5); }
+  .tl-period {
+    font-family: var(--mono); font-size: 11px; color: var(--muted);
+    letter-spacing: 0.1em; margin-bottom: 0.4rem;
+  }
+  .tl-role {
+    font-size: 16px; font-weight: 600; color: var(--text); margin-bottom: 2px;
+  }
+  .tl-company {
+    font-size: 13px; color: var(--accent); margin-bottom: 1rem; font-family: var(--mono);
+  }
+  .tl-bullets { list-style: none; }
+  .tl-bullets li {
+    font-size: 14px; color: var(--muted); padding: 4px 0;
+    padding-left: 1rem; position: relative; line-height: 1.6;
+  }
+  .tl-bullets li::before {
+    content: '→'; position: absolute; left: 0;
+    color: var(--accent2); font-size: 12px;
+  }
+
+  /* ── SKILLS ───────────────────────────────────────── */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px,1fr)); gap: 1rem; }
+  .skill-group {
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: 10px; padding: 1.25rem 1.5rem;
+    transition: border-color .2s, transform .2s;
+  }
+  .skill-group:hover { border-color: var(--border-hi); transform: translateY(-2px); }
+  .skill-group-title {
+    font-size: 11px; font-family: var(--mono);
+    letter-spacing: 0.12em; color: var(--accent2); margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+  .skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    font-size: 12px; font-family: var(--mono);
+    padding: 4px 10px; border-radius: 4px;
+    background: rgba(99,179,237,0.08);
+    border: 0.5px solid rgba(99,179,237,0.2);
+    color: var(--accent);
+  }
+  .tag.highlight {
+    background: rgba(246,135,179,0.1);
+    border-color: rgba(246,135,179,0.25);
+    color: var(--accent2);
+  }
+  .tag.green {
+    background: rgba(104,211,145,0.08);
+    border-color: rgba(104,211,145,0.2);
+    color: var(--accent3);
+  }
+
+  /* ── PROJECTS ─────────────────────────────────────── */
+  .projects-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+  .project-card {
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: 12px; padding: 1.5rem;
+    transition: border-color .2s, transform .2s;
+    display: flex; flex-direction: column; gap: 0.75rem;
+  }
+  .project-card:hover { border-color: var(--accent); transform: translateY(-3px); }
+  .project-card.featured { grid-column: span 2; }
+  .project-label {
+    font-size: 11px; font-family: var(--mono); letter-spacing: 0.12em;
+    color: var(--accent3); text-transform: uppercase;
+  }
+  .project-name { font-size: 17px; font-weight: 600; color: var(--text); }
+  .project-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
+  .project-stack { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 0.5rem; }
+
+  /* ── HENNGE FIT ───────────────────────────────────── */
+  #hennge { background: radial-gradient(ellipse 60% 50% at 30% 50%, rgba(229,62,62,0.05) 0%, transparent 65%); }
+  .fit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+  .fit-card {
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: 12px; padding: 1.5rem; transition: .2s;
+  }
+  .fit-card:hover { border-color: rgba(229,62,62,0.3); }
+  .fit-icon {
+    font-size: 1.5rem; margin-bottom: 0.75rem; display: block;
+  }
+  .fit-title { font-size: 15px; font-weight: 600; color: var(--text); margin-bottom: 0.5rem; }
+  .fit-body { font-size: 13px; color: var(--muted); line-height: 1.7; }
+  .fit-body strong { color: var(--accent); }
+
+  .pathway-banner {
+    background: var(--surface2); border: 0.5px solid rgba(229,62,62,0.25);
+    border-left: 3px solid var(--japan);
+    border-radius: 8px; padding: 1.25rem 1.5rem; margin-top: 2.5rem;
+    display: flex; align-items: flex-start; gap: 1rem;
+  }
+  .japan-flag { font-size: 1.4rem; flex-shrink: 0; }
+  .pb-title { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+  .pb-body { font-size: 13px; color: var(--muted); line-height: 1.6; }
+
+  /* ── EDUCATION ────────────────────────────────────── */
+  .edu-card {
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: 12px; padding: 1.5rem 2rem;
+    display: flex; align-items: center; gap: 2rem;
+  }
+  .edu-badge {
+    width: 56px; height: 56px; border-radius: 10px; flex-shrink: 0;
+    background: rgba(99,179,237,0.1);
+    border: 0.5px solid rgba(99,179,237,0.2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+  }
+  .edu-title { font-size: 17px; font-weight: 600; }
+  .edu-uni { font-size: 14px; color: var(--accent); font-family: var(--mono); margin: 2px 0; }
+  .edu-detail { font-size: 13px; color: var(--muted); }
+
+  /* ── CONTACT ──────────────────────────────────────── */
+  #contact { text-align: center; }
+  .contact-card {
+    max-width: 600px; margin: 0 auto;
+    background: var(--surface); border: 0.5px solid var(--border);
+    border-radius: 16px; padding: 2.5rem;
+  }
+  .contact-intro {
+    font-size: 15px; color: var(--muted); margin-bottom: 2rem; line-height: 1.7;
+  }
+  .contact-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 1rem; }
+  .contact-link {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 13px; font-family: var(--mono);
+    color: var(--text); text-decoration: none;
+    background: var(--surface2); border: 0.5px solid var(--border);
+    padding: 10px 20px; border-radius: 8px;
+    transition: .2s;
+  }
+  .contact-link:hover { border-color: var(--accent); color: var(--accent); }
+  .contact-link .icon { font-size: 1rem; }
+
+  /* ── FOOTER ───────────────────────────────────────── */
+  footer {
+    text-align: center; padding: 2rem;
+    border-top: 0.5px solid var(--border);
+    font-size: 12px; color: var(--muted); font-family: var(--mono);
+    position: relative; z-index: 1;
+  }
+
+  /* ── ANIMATIONS ───────────────────────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(24px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+  .reveal.visible { opacity: 1; transform: none; }
+
+  /* ── RESPONSIVE ───────────────────────────────────── */
+  @media (max-width: 680px) {
+    .about-grid, .projects-grid, .fit-grid { grid-template-columns: 1fr; }
+    .project-card.featured { grid-column: span 1; }
+    .about-stats { grid-template-columns: 1fr 1fr; }
+    .nav-links { display: none; }
+    .edu-card { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-logo">JKS.dev</span>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#hennge">HENNGE GIP</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-inner">
+    <span class="hero-tag">Available — HENNGE Global Internship Program 2026</span>
+    <h1 class="hero-name">
+      <span class="first">Jitendra Kumar</span>
+      <span class="last">Sharma</span>
+    </h1>
+    <p class="hero-sub">
+      <strong>React Developer</strong> · 2+ years building responsive web applications.<br>
+      Passionate about front-end engineering, clean UI, and cloud-integrated products.
+    </p>
+    <div class="hero-meta">
+      <span class="meta-item"><span class="dot"></span>Jaipur, Rajasthan, India</span>
+      <span class="meta-item"><span class="dot"></span>MCA · Rajasthan University</span>
+      <span class="meta-item"><span class="dot"></span>English Proficient</span>
+    </div>
+    <div class="hero-cta">
+      <a href="#hennge" class="btn btn-primary">Why HENNGE? →</a>
+      <a href="#experience" class="btn btn-outline">View Experience</a>
+    </div>
+    <p class="hero-scroll"><span class="scroll-line"></span>scroll to explore</p>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <div class="sec-header reveal">
+      <span class="sec-num">01 / ABOUT</span>
+      <h2 class="sec-title">Who I Am</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="about-grid reveal">
+      <div class="about-text">
+        <p>
+          I'm a <strong>detail-oriented React Developer</strong> with over two years of hands-on experience building production-grade front-end applications. Currently working full-time at <strong>E-connect Pvt. Sol. Ltd.</strong>, where I led the front-end development of Raj Sampark 2.0 and am now contributing to the Raj SIMS platform.
+        </p>
+        <p>
+          I thrive in collaborative, fast-paced environments and enjoy solving real engineering problems — from state management challenges to API integration. I hold an <strong>MCA (73%)</strong> from Rajasthan University and am fluent in both Hindi and English.
+        </p>
+        <p>
+          I'm drawn to <strong>HENNGE's GIP</strong> because it offers the rare opportunity to work in a diverse international engineering team, contribute to cloud security products, and experience professional software culture in Tokyo — all aligned with my growth path in full-stack development.
+        </p>
+      </div>
+      <div class="about-stats">
+        <div class="stat-card">
+          <div class="stat-num">2+</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">3</div>
+          <div class="stat-label">Roles Held</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">73%</div>
+          <div class="stat-label">MCA Score</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num">2</div>
+          <div class="stat-label">Languages</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container">
+    <div class="sec-header reveal">
+      <span class="sec-num">02 / EXPERIENCE</span>
+      <h2 class="sec-title">Work History</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="timeline reveal">
+
+      <div class="tl-item">
+        <div class="tl-dot current"></div>
+        <div class="tl-period">Jan 2024 — Present</div>
+        <div class="tl-role">React Developer</div>
+        <div class="tl-company">E-connect Pvt. Sol. Ltd.</div>
+        <ul class="tl-bullets">
+          <li>Led front-end development of <strong>Raj Sampark 2.0</strong> (Feb 2024 – Jun 2025), a citizen-government interface platform, using React.js and related technologies.</li>
+          <li>Currently contributing to <strong>Raj SIMS</strong> (Jul 2025–Present), building scalable UI components and integrating back-end APIs.</li>
+          <li>Involved in code reviews, sprint planning, and UI/UX decision-making for production deployments.</li>
+        </ul>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">7 Months — E-connect Pvt. Sol. Ltd.</div>
+        <div class="tl-role">Frontend Intern</div>
+        <div class="tl-company">E-connect Pvt. Sol. Ltd.</div>
+        <ul class="tl-bullets">
+          <li>Focused on React.js front-end development and contributed internal tools and reusable UI components.</li>
+          <li>Gained working knowledge of Node.js through self-directed learning on the job.</li>
+          <li>Collaborated with senior developers on feature development and bug resolution cycles.</li>
+        </ul>
+      </div>
+
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-period">2 Months — Dotsquares</div>
+        <div class="tl-role">Flutter Developer Intern</div>
+        <div class="tl-company">Dotsquares</div>
+        <ul class="tl-bullets">
+          <li>Gained foundational mobile development experience with <strong>Flutter</strong> for cross-platform app UI.</li>
+          <li>Contributed React.js components for internal web tooling alongside mobile work.</li>
+          <li>Independently learned Node.js fundamentals to complement front-end responsibilities.</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="container">
+    <div class="sec-header reveal">
+      <span class="sec-num">03 / SKILLS</span>
+      <h2 class="sec-title">Technical Stack</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="skills-grid reveal">
+      <div class="skill-group">
+        <div class="skill-group-title">Core Languages</div>
+        <div class="skill-tags">
+          <span class="tag">JavaScript</span>
+          <span class="tag">TypeScript</span>
+          <span class="tag">HTML5</span>
+          <span class="tag">CSS3</span>
+          <span class="tag">Python (learning)</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Front-End Frameworks</div>
+        <div class="skill-tags">
+          <span class="tag highlight">React.js</span>
+          <span class="tag highlight">Flutter</span>
+          <span class="tag">Responsive Design</span>
+          <span class="tag">State Management</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Back-End &amp; APIs</div>
+        <div class="skill-tags">
+          <span class="tag green">Node.js</span>
+          <span class="tag green">REST APIs</span>
+          <span class="tag green">HTTP</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Tools &amp; Workflow</div>
+        <div class="skill-tags">
+          <span class="tag">Git / GitHub</span>
+          <span class="tag">Unix-like Systems</span>
+          <span class="tag">Agile / Sprints</span>
+          <span class="tag">Code Review</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">HENNGE-Relevant</div>
+        <div class="skill-tags">
+          <span class="tag highlight">TypeScript</span>
+          <span class="tag highlight">React / Vue</span>
+          <span class="tag green">API Integration</span>
+          <span class="tag green">Web Technologies</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <div class="skill-group-title">Soft Skills</div>
+        <div class="skill-tags">
+          <span class="tag">English Proficient</span>
+          <span class="tag">Collaborative</span>
+          <span class="tag">Self-Directed</span>
+          <span class="tag">Fast Learner</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <div class="sec-header reveal">
+      <span class="sec-num">04 / PROJECTS</span>
+      <h2 class="sec-title">Featured Work</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="projects-grid reveal">
+
+      <div class="project-card featured">
+        <div class="project-label">⭐ Production · Civic Tech</div>
+        <div class="project-name">Raj Sampark 2.0</div>
+        <div class="project-desc">
+          A government-citizen engagement portal for Rajasthan, India. Led end-to-end front-end development from inception (Feb 2024) through completion (Jun 2025). Responsible for architecture decisions, component design, API integration, and iterative delivery across multiple sprints.
+        </div>
+        <div class="project-stack">
+          <span class="tag highlight">React.js</span>
+          <span class="tag">JavaScript</span>
+          <span class="tag">HTML / CSS</span>
+          <span class="tag green">REST APIs</span>
+          <span class="tag">Responsive UI</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-label">🔄 Active · Government</div>
+        <div class="project-name">Raj SIMS</div>
+        <div class="project-desc">
+          Currently contributing to Raj SIMS — a school information management system — with a focus on front-end development and component-level architecture using React.js.
+        </div>
+        <div class="project-stack">
+          <span class="tag highlight">React.js</span>
+          <span class="tag green">Node.js</span>
+          <span class="tag">REST APIs</span>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-label">📱 Mobile · Internship</div>
+        <div class="project-name">Flutter Mobile App (Dotsquares)</div>
+        <div class="project-desc">
+          Contributed to cross-platform mobile UI development using Flutter during internship at Dotsquares. Also built React.js internal tooling in parallel.
+        </div>
+        <div class="project-stack">
+          <span class="tag">Flutter</span>
+          <span class="tag highlight">React.js</span>
+          <span class="tag">Dart</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HENNGE FIT -->
+<section id="hennge">
+  <div class="container">
+    <div class="sec-header reveal">
+      <span class="sec-num">05 / HENNGE GIP FIT</span>
+      <h2 class="sec-title">Why I'm a Strong Candidate</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="fit-grid reveal">
+
+      <div class="fit-card">
+        <span class="fit-icon">⚡</span>
+        <div class="fit-title">Front-End Pathway Alignment</div>
+        <div class="fit-body">
+          My core stack — <strong>React.js + JavaScript/TypeScript</strong> — maps directly to HENNGE's Front-End Pathway requirements. I have production experience with state management, data fetching, and back-end API integration, exactly as outlined in the program.
+        </div>
+      </div>
+
+      <div class="fit-card">
+        <span class="fit-icon">🏗️</span>
+        <div class="fit-title">Real Production Experience</div>
+        <div class="fit-body">
+          Unlike many applicants, I bring <strong>live production deployments</strong> (Raj Sampark 2.0, Raj SIMS) — not just academic projects. I've worked within sprint cycles, code reviews, and iterative delivery, which mirrors HENNGE's engineering culture.
+        </div>
+      </div>
+
+      <div class="fit-card">
+        <span class="fit-icon">🌐</span>
+        <div class="fit-title">English-First Environment Ready</div>
+        <div class="fit-body">
+          Proficient in English — the working language at HENNGE GIP. I'm comfortable in written and spoken technical discussions, documentation, and cross-cultural collaboration with an <strong>international engineering team from 20+ countries</strong>.
+        </div>
+      </div>
+
+      <div class="fit-card">
+        <span class="fit-icon">📈</span>
+        <div class="fit-title">Self-Directed Learner</div>
+        <div class="fit-body">
+          I taught myself <strong>Node.js independently</strong> while on the job — demonstrating the initiative HENNGE seeks. The GIP's mentorship-driven model is exactly how I learn best: hands-on, real problems, guided by experienced engineers.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pathway-banner reveal">
+      <span class="japan-flag">🇯🇵</span>
+      <div>
+        <div class="pb-title">Applying for: Front-End Pathway — Batch 4 (Aug 3 – Sep 11, 2026)</div>
+        <div class="pb-body">
+          With 2+ years of React.js experience and TypeScript knowledge, I'm targeting the Front-End Pathway, focusing on TypeScript, React, state management, and back-end service integration. I'm eager to contribute to HENNGE One and grow alongside a world-class engineering team in Shibuya, Tokyo.
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="container">
+    <div class="sec-header reveal">
+      <span class="sec-num">06 / EDUCATION</span>
+      <h2 class="sec-title">Academic Background</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="edu-card reveal">
+      <div class="edu-badge">🎓</div>
+      <div>
+        <div class="edu-title">Master of Computer Applications (MCA)</div>
+        <div class="edu-uni">Rajasthan University, Jaipur, Rajasthan</div>
+        <div class="edu-detail">Graduated 2023 · Percentage: 73%</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="sec-header reveal">
+      <span class="sec-num">07 / CONTACT</span>
+      <h2 class="sec-title">Let's Connect</h2>
+      <div class="sec-line" style="margin: 1rem auto 0;"></div>
+    </div>
+    <div class="contact-card reveal">
+      <p class="contact-intro">
+        Interested in discussing my application for the HENNGE Global Internship Program, or just want to talk front-end engineering? I'd love to hear from you.
+      </p>
+      <div class="contact-links">
+        <a href="mailto:jksjhakash@gmail.com" class="contact-link">
+          <span class="icon">✉️</span> jksjhakash@gmail.com
+        </a>
+        <a href="tel:+917611083996" class="contact-link">
+          <span class="icon">📱</span> +91 7611083996
+        </a>
+        <a href="#" class="contact-link">
+          <span class="icon">💻</span> GitHub (Portfolio)
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  Built for HENNGE Global Internship Program 2026 · Jitendra Kumar Sharma · Jaipur, India
+</footer>
+
+<script>
+  const reveals = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e, i) => {
+      if (e.isIntersecting) {
+        setTimeout(() => e.target.classList.add('visible'), i * 80);
+        io.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
